@@ -1,0 +1,68 @@
+/* css/style.css */
+body {
+    font-family: Arial, sans-serif;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+img {
+    max-width: 100%; /* This ensures the image won't exceed its container's width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* styles.css */
+.horizontal-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Displays list items horizontally */
+  justify-content: center; /* Center the menu items horizontally */
+}
+
+.horizontal-menu li {
+  margin-right: 15px; /* Adjust spacing between menu items */
+}
+
+.bottom-menu {
+    clear: both; /* Clear the floating elements above */
+    margin-top: 20px; /* Add some spacing above the menu */
+}
+
+.table-container {
+    width: 80%;
+    overflow: hidden;
+    margin: 0 auto; /* Center the container horizontally */
+  }
+
+.table {
+  width: 50%;
+  float: left;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.title-wrapper {
+    text-align: center;
+}
+
+footer {
+margin-top: 20px; /* Adjust this value as needed */
+        text-align: center;
+        padding: 20px;
+        background-color: #f0f0f0;
+}
+
+/* Style for smaller text in the footer */
+.small-text {
+    font-size: 12px;
+}
+
+main {
+    margin-top: 20px; /* Adjust this value as needed */
+}
