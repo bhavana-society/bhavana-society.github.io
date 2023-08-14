@@ -4,6 +4,7 @@ import os
 import pandas as pd
 from pathlib import Path
 import shutil
+import glob
 
 TABLE_SIZE = 50
 
@@ -83,24 +84,41 @@ def make_tables_by_topic(page_template, unformatted_topic, chunks):
 
 def main():
 
-    all_talks = pd.read_csv('scripts/talks_basic.csv')
+
+    for f in glob.glob("*.html"):
+        os.remove(f)
+
+    all_talks = pd.read_csv('scripts/talks.csv')
+    all_talks = all_talks.sort_values('Title').reset_index()
 
     with open('scripts/template.html') as f:
         template = f.read()
 
-    topics = ['All', 'Buddha', 'Seclusion']
+    topics = ['All', 'Metta', 'Sutta', 'Jhana', 'Q&A', 'Meditation', 'Kids', 'Dependent Origination', 'Noble Eightfold Path', 'Enlightenment', 'Periodic', 'Misc']
 
     with_topics = generate_topics_menu(template, topics)
 
     titles = all_talks['Title'].str.lower().str
 
+    periodic_topics = ['Morning Session', 'Afternoon Dhamma Talk', 'Dhamma Talk with Bhante G',
+                       'Weekly Dhamma Talk', 'Saturday', 'Bhavana Society Dhamma', 'COVID-19']
+    periodic_inds = [titles.contains(t.lower()) for t in periodic_topics]
+    periodic_ind = np.logical_or.reduce(periodic_inds)
+
     for topic in topics:
 
-        if topic != 'All':
+        if topic == 'All':
+            df = all_talks.copy()
+        elif topic == 'Periodic':
+            df = all_talks[periodic_ind]
+        elif topic == 'Misc':
+            inds = [titles.contains(t.lower()) for t in topics] + [periodic_ind]
+            has_topic = np.logical_or.reduce(inds)
+            df = all_talks[~has_topic]
+        else:
             ind = titles.contains(topic.lower())
             df = all_talks[ind]
-        else:
-            df = all_talks.copy()
+
 
         chunks = np.split(df, np.arange(0, len(df), TABLE_SIZE)[1:])
         make_tables_by_topic(with_topics, topic, chunks)
@@ -108,11 +126,6 @@ def main():
 
 
     shutil.copy('all-1.html', 'index.html')
-
-
-    """
-    TODO - add a 'last generated on XYZ with a link to the current YT'
-    """
 
 
 
