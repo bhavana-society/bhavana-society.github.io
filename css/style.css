@@ -29,6 +29,43 @@ img {
   margin-right: 15px; /* Adjust spacing between menu items */
 }
 
+.horizontal-menu li a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+
+  .vertical-menu {
+      list-style-type: none;
+      padding: 0;
+      width: 200px; /* Adjust the width as needed */
+
+    }
+
+    .vertical-menu li {
+      text-align: center;
+      border-bottom: 10px solid white;
+    }
+
+    /* Button styles */
+    .vertical-menu li a {
+      display: block;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: white;
+      background-color: #007bff;
+      transition: background-color 0.3s;
+      border-radius: 5px;
+    }
+
+    .vertical-menu li a:hover {
+      background-color: #ddd;
+    }
+
 .bottom-menu {
     clear: both; /* Clear the floating elements above */
     margin-top: 20px; /* Add some spacing above the menu */

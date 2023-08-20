@@ -10,7 +10,7 @@ TABLE_SIZE = 50
 
 
 def generate_topics_menu(template, topics):
-    menu_template = """<ul class="horizontal-menu">{items}</ul>"""
+    menu_template = """<ul class="vertical-menu">{items}</ul>"""
     list_template = """<li><a href="{topic}-1.html">{text}</a></li>"""
 
     items = [list_template.format(topic=t.lower(), text=t) for t in topics]
@@ -83,7 +83,6 @@ def make_tables_by_topic(page_template, unformatted_topic, chunks):
 
 
 def main():
-
 
     for f in glob.glob("*.html"):
         os.remove(f)
