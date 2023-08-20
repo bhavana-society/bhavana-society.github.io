@@ -5,15 +5,26 @@ import pandas as pd
 from pathlib import Path
 import shutil
 import glob
+import itertools
 
 TABLE_SIZE = 50
+
+pastel_rainbow_colors = [
+    "#FFDDC1",  # Light Peach
+    "#FFC3A0",  # Melon
+    "#FFD700",  # Gold
+    "#B0E57C",  # Light Green
+    "#87CEEB",  # Sky Blue
+    "#B19CD9",  # Lavender
+    "#FFC0CB"  # Pink
+]
 
 
 def generate_topics_menu(template, topics):
     menu_template = """<ul class="vertical-menu">{items}</ul>"""
-    list_template = """<li><a href="{topic}-1.html">{text}</a></li>"""
-
-    items = [list_template.format(topic=t.lower(), text=t) for t in topics]
+    list_template = """<li><a href="{topic}-1.html" style="background-color:{color};">{text}</a></li>"""
+    #items = [list_template.format(topic=t.lower(), text=t) for t in topics]
+    items = [list_template.format(topic=t.lower(), text=t, color=c) for t, c in zip(topics, itertools.cycle(pastel_rainbow_colors))]
     formatted = "\n".join(items)
     menu = menu_template.format(items=formatted)
 
