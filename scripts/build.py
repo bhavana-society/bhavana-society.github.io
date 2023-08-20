@@ -105,7 +105,7 @@ def make_prefilled_page(topic, page_template):
         r = file.read()
         html = no_nav.format(table=r)
 
-    with open('{}-1.html'.format(topic), 'w') as file:
+    with open('{}-1.html'.format(topic.lower()), 'w') as file:
         file.write(html)
 
 
