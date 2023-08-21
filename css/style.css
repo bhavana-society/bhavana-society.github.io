@@ -29,13 +29,54 @@ img {
   margin-right: 15px; /* Adjust spacing between menu items */
 }
 
+.horizontal-menu li a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+
+  .vertical-menu {
+      list-style-type: none;
+      padding: 0;
+      width: 200px; /* Adjust the width as needed */
+
+    }
+
+    .vertical-menu li {
+      text-align: center;
+      border-bottom: 10px solid white;
+    }
+
+    /* Button styles */
+    .vertical-menu li a {
+      display: block;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: white;
+      background-color: #007bff;
+      transition: background-color 0.3s;
+      border-radius: 5px;
+
+      /*text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;*/
+      text-shadow: 0 0 5px black;
+      font-size: 20px;
+    }
+
+    .vertical-menu li a:hover {
+      background-color: #ddd;
+    }
+
 .bottom-menu {
     clear: both; /* Clear the floating elements above */
     margin-top: 20px; /* Add some spacing above the menu */
 }
 
 .table-container {
-    width: 80%;
+    width: 70%;
     overflow: hidden;
     margin: 0 auto; /* Center the container horizontally */
   }
@@ -65,4 +106,19 @@ margin-top: 20px; /* Adjust this value as needed */
 
 main {
     margin-top: 20px; /* Adjust this value as needed */
+}
+
+.progress-bar {
+    width: 200px; /* Use a percentage value to make it span the width */
+    height: 20px; /* Adjust the height as desired */
+    background-color: #a3a3a3;
+    position: relative;
+    cursor: pointer;
+}
+
+.progress-indicator {
+    height: 100%;
+    width: 0;
+    background-color: #007BFF; /* Color for the progress portion */
+    transition: width 0.2s ease-in-out;
 }

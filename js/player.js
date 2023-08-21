@@ -2,6 +2,10 @@ function onYouTubeIframeAPIReady() {
 
   const playerContainers = document.querySelectorAll('.youtube-audio');
 
+
+
+
+
   playerContainers.forEach(container => {
 
     var icon = document.createElement("img");
@@ -18,6 +22,16 @@ function onYouTubeIframeAPIReady() {
     var playerContainer = document.createElement("div");
     playerContainer.setAttribute("class", "youtube-player");
     container.appendChild(playerContainer);
+
+
+    // Create the progress bar element
+    var progressBar = document.createElement("div");
+    progressBar.setAttribute("class", "progress-bar");
+    container.appendChild(progressBar);
+
+    var progressIndicator = document.createElement("div");
+    progressIndicator.setAttribute("class", "progress-indicator");
+    progressBar.appendChild(progressIndicator);
 
     var updateIcon = function(isPlaying) {
         var iconSrc = isPlaying ? "pause.png" : "play.png"; // Use the actual filenames
@@ -52,8 +66,33 @@ function onYouTubeIframeAPIReady() {
                 if (event.data === YT.PlayerState.ENDED) {
                     updateIcon(false);
                 }
+                if (event.data === YT.PlayerState.PLAYING) {
+                  var progressIndicator = progressBar.querySelector(".progress-indicator");
+
+                  var updateProgressBar = function() {
+                      var currentTime = player.getCurrentTime();
+                      var duration = player.getDuration();
+                      var progressPercent = (currentTime / duration) * 100;
+                      progressIndicator.style.width = progressPercent + "%";
+                  };
+
+                    // Update the progress bar immediately and then every second
+                    updateProgressBar();
+                    setInterval(updateProgressBar, 1000);
+                }
+
             }
         }
     });
+
+    // Add an event listener to the progress bar for seeking
+    progressBar.addEventListener("click", function(event) {
+        var progressBarWidth = progressBar.offsetWidth;
+        var clickPosition = event.clientX - progressBar.getBoundingClientRect().left;
+        var seekTime = (clickPosition / progressBarWidth) * player.getDuration();
+        player.seekTo(seekTime, true);
+    });
+
+
   });
 }

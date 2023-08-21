@@ -5,32 +5,48 @@ import pandas as pd
 from pathlib import Path
 import shutil
 import glob
+import itertools
 
 TABLE_SIZE = 50
 
+pastel_rainbow_colors = [
+    "#FFDDC1",  # Light Peach
+    "#FFC3A0",  # Melon
+    "#FFD700",  # Gold
+    "#B0E57C",  # Light Green
+    "#87CEEB",  # Sky Blue
+    "#B19CD9",  # Lavender
+    "#FFC0CB"  # Pink
+]
+
 
 def generate_topics_menu(template, topics):
-    menu_template = """<ul class="horizontal-menu">{items}</ul>"""
-    list_template = """<li><a href="{topic}-1.html">{text}</a></li>"""
-
-    items = [list_template.format(topic=t.lower(), text=t) for t in topics]
+    menu_template = """<ul class="vertical-menu">{items}</ul>"""
+    list_template = """<li><a href="{topic}-1.html" style="background-color:{color};">{text}</a></li>"""
+    #items = [list_template.format(topic=t.lower(), text=t) for t in topics]
+    items = [list_template.format(topic=t.lower(), text=t, color=c) for t, c in zip(topics, itertools.cycle(pastel_rainbow_colors))]
     formatted = "\n".join(items)
     menu = menu_template.format(items=formatted)
 
     return template.format(topics_menu=menu, page_nav = '{page_nav}', table = '{table}')
+
+def generate_page_nav(topic, num_pages, page_template):
+
+    menu_template = """<div class="bottom-menu"><ul class="horizontal-menu">{items}</ul></div>"""
+    list_template = """<li><a href="{topic}-{number}.html">{number}</a></li>"""
+    items = [list_template.format(topic=topic, number=i+1) for i in range(num_pages)]
+    formatted = "\n".join(items)
+    page_nav = menu_template.format(items=formatted)
+    with_page_nav = page_template.format(page_nav = page_nav, table = '{table}')
+
+    return with_page_nav
 
 
 def make_tables_by_topic(page_template, unformatted_topic, chunks):
 
 
     topic = unformatted_topic.lower()
-
-    menu_template = """<div class="bottom-menu"><ul class="horizontal-menu">{items}</ul></div>"""
-    list_template = """<li><a href="{topic}-{number}.html">{number}</a></li>"""
-    items = [list_template.format(topic=topic, number=i+1) for i in range(len(chunks))]
-    formatted = "\n".join(items)
-    page_nav = menu_template.format(items=formatted)
-    with_page_nav = page_template.format(page_nav = page_nav, table = '{table}')
+    with_page_nav = generate_page_nav(topic, len(chunks), page_template)
 
     row_template = """<tr><th>{r1}</th><th>{r2}</th><th>{r3}</th></tr>"""
     header = row_template.format(r1='Title', r2='Number', r3='Audio')
@@ -81,9 +97,20 @@ def make_tables_by_topic(page_template, unformatted_topic, chunks):
             file.write(html)
 
 
+def make_prefilled_page(topic, page_template):
+
+    no_nav = page_template.format(page_nav='', table='{table}')
+
+    with open("scripts/{}.html".format(topic.lower())) as file:
+        r = file.read()
+        html = no_nav.format(table=r)
+
+    with open('{}-1.html'.format(topic.lower()), 'w') as file:
+        file.write(html)
+
+
 
 def main():
-
 
     for f in glob.glob("*.html"):
         os.remove(f)
@@ -94,9 +121,12 @@ def main():
     with open('scripts/template.html') as f:
         template = f.read()
 
-    topics = ['All', 'Metta', 'Sutta', 'Jhana', 'Q&A', 'Meditation', 'Kids', 'Dependent Origination', 'Noble Eightfold Path', 'Enlightenment', 'Periodic', 'Misc']
+    topics = ['All', 'Metta', 'Sutta', 'Jhana', 'Q&A', 'Meditation', 'Kids',
+              'Dependent Origination', 'Noble Eightfold Path', 'Enlightenment', 'Periodic', 'Misc']
 
-    with_topics = generate_topics_menu(template, topics)
+    prefilled_topics = ['About', 'Books', 'Reactions']
+
+    with_topics = generate_topics_menu(template, topics + prefilled_topics)
 
     titles = all_talks['Title'].str.lower().str
 
@@ -119,9 +149,12 @@ def main():
             ind = titles.contains(topic.lower())
             df = all_talks[ind]
 
-
         chunks = np.split(df, np.arange(0, len(df), TABLE_SIZE)[1:])
         make_tables_by_topic(with_topics, topic, chunks)
+
+
+    for topic in prefilled_topics:
+        make_prefilled_page(topic, with_topics)
 
 
 
