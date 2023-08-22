@@ -21,7 +21,7 @@ pastel_rainbow_colors = [
 
 
 def generate_topics_menu(template, topics):
-    menu_template = """<ul class="vertical-menu">{items}</ul>"""
+    menu_template = """<ul class="vertical-menu" style="background-color:#b5e8fc;">{items}</ul>"""
     list_template = """<li><a href="{topic}-1.html" style="background-color:{color};">{text}</a></li>"""
     #items = [list_template.format(topic=t.lower(), text=t) for t in topics]
     items = [list_template.format(topic=t.lower(), text=t, color=c) for t, c in zip(topics, itertools.cycle(pastel_rainbow_colors))]
