@@ -14,7 +14,7 @@ def main():
     to_remove = ['- YouTube', ]
     to_replace = [('QnA', 'Q&A'), ('Q-A', 'Q&A'), ('QA', 'Q&A'), ('Youth', 'Kids'), ('Children', 'Kid'), ("Kid's", 'Kids'),
                   ('Dependent Origin.', 'Dependent Origination'), ('Dep. Origination', 'Dependent Origination'), ("“", "'"), ("”", "'"),
-                  ('Noble8FoldPath', 'Noble Eightfold Path'), ('ṅ', 'n'), ('ñ', 'n'), ('ā', 'a'), ('ū', 'u')]
+                  ('Noble8FoldPath', 'Noble Eightfold Path'), ('ṅ', 'n'), ('ñ', 'n'), ('ā', 'a'), ('ū', 'u'), ('_', ' ')]
 
     talks = []
 
