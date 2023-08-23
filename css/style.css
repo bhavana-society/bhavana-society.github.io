@@ -1,6 +1,7 @@
 /* css/style.css */
 body {
     font-family: Arial, sans-serif;
+    background-color: #b5e8fc;
 }
 table {
     border-collapse: collapse;
@@ -48,7 +49,8 @@ img {
 
     .vertical-menu li {
       text-align: center;
-      border-bottom: 10px solid white;
+      border-bottom: 5px solid #b5e8fc;
+      background-color: #b5e8fc;
     }
 
     /* Button styles */
@@ -57,7 +59,6 @@ img {
       padding: 10px 20px;
       text-decoration: none;
       color: white;
-      background-color: #007bff;
       transition: background-color 0.3s;
       border-radius: 5px;
 
@@ -68,6 +69,10 @@ img {
 
     .vertical-menu li a:hover {
       background-color: #ddd;
+    }
+
+    .vertical-menu li a {
+      background-color: #b5e8fc; /* Set the background color for the <a> elements in the vertical menu */
     }
 
 .bottom-menu {
@@ -86,6 +91,10 @@ img {
   float: left;
   box-sizing: border-box;
   padding: 10px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternate background color */
 }
 
 .title-wrapper {
@@ -111,7 +120,7 @@ main {
 .progress-bar {
     width: 200px; /* Use a percentage value to make it span the width */
     height: 20px; /* Adjust the height as desired */
-    background-color: #a3a3a3;
+    background-color: #cecece;
     position: relative;
     cursor: pointer;
 }
